@@ -1,0 +1,16 @@
+---
+- name: Test PHP role
+  hosts: all
+  gather_facts: true
+
+  vars:
+    - php_version: 8.0
+
+  tasks:
+    - include_role:
+        name: php
+
+    - name: check PHP binary exists
+      shell: php -v
+      register: php_binary
+      failed_when: php_binary.rc != 0

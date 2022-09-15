@@ -1,0 +1,32 @@
+---
+- name: install packages
+  apt:
+    pkg:
+      - gpg
+      - apt-transport-https
+    update_cache: yes
+    install_recommends: yes
+    state: present
+
+- name: add PHP repository key
+  apt_key:
+    url: "https://packages.sury.org/php/apt.gpg"
+    state: present
+
+- name: add PHP repository
+  apt_repository:
+    repo: "deb https://packages.sury.org/php/ {{ ansible_distribution_release }} main"
+    state: present
+    filename: "php"
+
+- name: install PHP
+  apt:
+    pkg:
+      - "php{{php_version}}"
+    update_cache: yes
+    install_recommends: no
+    state: present
+
+- name: autoremove unused packages
+  apt:
+    autoremove: yes

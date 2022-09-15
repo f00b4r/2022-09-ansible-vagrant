@@ -1,0 +1,9 @@
+---
+- name: Install PHP
+  hosts: all
+  gather_facts: true
+
+  tasks:
+    - include_role:
+        name: php
+      when: php_version is defined
